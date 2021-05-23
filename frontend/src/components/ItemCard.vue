@@ -1,45 +1,47 @@
 <template>
   <div class="food-card">
-                  <div class="food-card_img">
-                    <img src="https://i.imgur.com/eFWRUuR.jpg" :alt="product.image_id">
-                    <a href="#"><i class="far fa-heart"></i></a>
-                  </div>
-                  <div class="food-card_content">
-                    <div class="food-card_title-section">
-                      <a class="food-card_title">{{ product.name }}</a>
-                      <a class="food-card_author">{{ category.name }}</a>
-                    </div>
-                    <div class="food-card_bottom-section">
-                      <hr>
-                      <div class="space-between">
-                        <div class="food-card_price">
-                          <span>{{ product.price }}$</span>
-                        </div>
-                        <div class="food-card_order-count">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <button class="btn btn-outline-secondary minus-btn"
-                                      type="button"
-                              >
-                                <BIconPlus/>
-                              </button>
-                            </div>
-                            <input type="text" class="form-control input-manulator" placeholder=""
-                                   aria-label="Example text with button addon"
-                                   value="0">
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary add-btn"
-                                      type="button"
-                              >
-                                <BIconDash/>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    <div class="food-card_img">
+      <img src="https://i.imgur.com/eFWRUuR.jpg" :alt="product.image_id">
+      <a href="#"><i class="far fa-heart"></i></a>
+    </div>
+    <div class="food-card_content">
+      <div class="food-card_title-section">
+        <a class="food-card_title">{{ product.name }}</a>
+        <a class="food-card_author">{{ category.name }}</a>
+      </div>
+      <div class="food-card_bottom-section">
+        <hr>
+        <div class="space-between">
+          <div class="food-card_price">
+            <span>{{ product.price }}$</span>
+          </div>
+          <div class="food-card_order-count">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary minus-btn"
+                        type="button"
+                        @click="addCartItem(product)"
+                >
+                  <BIconPlus/>
+                </button>
+              </div>
+              <input type="text" class="form-control input-manulator" placeholder=""
+                     aria-label="Example text with button addon"
+                     value="0">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary add-btn"
+                        type="button"
+                        @click="removeCartItem(product.id)"
+                >
+                  <BIconDash/>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -54,6 +56,14 @@ export default {
   components: {
     BIconPlus,
     BIconDash
+  },
+  methods: {
+    addCartItem (product) {
+      this.$store.commit('addCartItem', product)
+    },
+    removeCartItem (productId) {
+      this.$store.commit('removeCartItem', productId)
+    }
   }
 }
 </script>
