@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import PaymentForm from '@/components/PaymentForm'
-import CartItems from '@/components/CartItems'
-import MarketingCall from '@/components/MarketingCall'
+import PaymentForm from '@/components/checkout/PaymentForm'
+import CartItems from '@/components/cart/CartItems'
+import MarketingCall from '@/components/layout/MarketingCall'
 
 export default {
   name: 'Checkout',

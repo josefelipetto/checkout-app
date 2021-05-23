@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import MarketingCall from '@/components/MarketingCall'
-import ItemCard from '@/components/ItemCard'
+import MarketingCall from '@/components/layout/MarketingCall'
+import ItemCard from '@/components/items/ItemCard'
 
 export default {
   name: 'Home',
