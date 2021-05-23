@@ -1,5 +1,5 @@
 <template>
-  <OrderResultModal ref="resultModal"/>
+  <OrderResultModal ref="resultModal" on-success-redirect-to="/"/>
 
   <div class="col-md-7 col-lg-8">
     <div class="alert alert-danger" role="alert" v-if="errors.length">
@@ -173,9 +173,13 @@ export default {
       if (!this.validateForm()) {
         return
       }
-      const success = true
+      const success = false
       this.$refs.resultModal.setType(success === true ? 'S' : 'F')
       this.$refs.resultModal.show()
+
+      if (success) {
+        this.$store.commit('emptyCart')
+      }
     },
     validateForm () {
       this.errors = []
@@ -192,10 +196,7 @@ export default {
         hasErrors = true
       }
 
-      if (!this.email) {
-        this.errors.push('Email must be provided.')
-        hasErrors = true
-      } else if (!this.validEmail(this.email)) {
+      if (this.email && !this.validEmail(this.email)) {
         this.errors.push('Valid email required.')
         hasErrors = true
       }

@@ -131,6 +131,10 @@ export default createStore({
     },
     setCategories (state, payload) {
       state.categories = payload
+    },
+    emptyCart (state, payload) {
+      state.cart = []
+      state.cartTotalItems = 0
     }
   },
   actions: {

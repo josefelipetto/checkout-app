@@ -33,6 +33,9 @@ import { Modal } from 'bootstrap'
 import { BIconCheckLg } from 'bootstrap-icons-vue'
 export default {
   name: 'OrderConfirmedModal',
+  props: {
+    onSuccessRedirectTo: String
+  },
   data: () => ({
     modal: null,
     type: '',
@@ -45,6 +48,9 @@ export default {
     },
     hide () {
       this.modal.hide()
+      if (this.type === 'S') {
+        this.$router.push(this.onSuccessRedirectTo)
+      }
     },
     setType (type) {
       this.type = type
