@@ -27,7 +27,7 @@
               </div>
               <input type="text" class="form-control input-manulator" placeholder=""
                      aria-label="Example text with button addon"
-                     value="0">
+                     :value="product.id in cart ? cart[product.id].quantity : 0">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary add-btn"
                         type="button"
@@ -63,6 +63,11 @@ export default {
     },
     removeCartItem (productId) {
       this.$store.commit('removeCartItem', productId)
+    }
+  },
+  computed: {
+    cart () {
+      return this.$store.getters.getCart
     }
   }
 }

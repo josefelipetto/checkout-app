@@ -1,8 +1,32 @@
 <template>
   <div class="col-md-7 col-lg-8">
+    <h4 class="mb-3">Personal information</h4>
     <form class="needs-validation" novalidate="">
-      <h4 class="mb-3">Payment information</h4>
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <label for="firstName" class="form-label">First name</label>
+          <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="lastName" class="form-label">Last name</label>
+          <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+          <div class="invalid-feedback">
+            Valid last name is required.
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+          <input type="email" class="form-control" id="email" placeholder="you@example.com">
+          <div class="invalid-feedback">
+            Please enter a valid email address for shipping updates.
+          </div>
+        </div>
+      </div>
       <hr class="my-4">
+      <h4 class="mb-3">Payment information</h4>
       <div class="my-3">
         <div class="form-check">
           <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">

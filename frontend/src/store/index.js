@@ -103,11 +103,7 @@ export default createStore({
   mutations: {
     addCartItem (state, product) {
       if (product.id in state.cart) {
-        const productInfo = state.cart[product.id]
-        productInfo.quantity++
-        state.cart[product.id] = {
-          ...productInfo
-        }
+        state.cart[product.id].quantity++
       } else {
         state.cart[product.id] = {
           ...product,
@@ -117,7 +113,6 @@ export default createStore({
       state.cartTotalItems++
     },
     removeCartItem (state, productId) {
-      console.log(productId, state.cart)
       if (state.cartTotalItems <= 0) {
         return
       }
