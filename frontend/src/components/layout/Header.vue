@@ -10,9 +10,9 @@
         </div>
 
         <div class="text-end">
-          <button type="button" class="btn btn-warning">
+          <button type="button" class="btn btn-dark">
             <BIconCart4 />
-            <span class="badge bg-dark" id="lblCartCount">9</span>
+            <span class="badge rounded-circle bg-danger" id="lblCartCount">9</span>
           </button>
         </div>
       </div>
