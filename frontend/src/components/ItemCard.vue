@@ -22,7 +22,7 @@
                         type="button"
                         @click="addCartItem(product)"
                 >
-                  <BIconPlus/>
+                  <BIconPlus />
                 </button>
               </div>
               <input type="text" class="form-control input-manulator" placeholder=""
@@ -33,7 +33,7 @@
                         type="button"
                         @click="removeCartItem(product.id)"
                 >
-                  <BIconDash/>
+                  <BIconDash />
                 </button>
               </div>
             </div>

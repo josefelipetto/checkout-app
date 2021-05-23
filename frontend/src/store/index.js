@@ -101,17 +101,35 @@ export default createStore({
     ]
   },
   mutations: {
-    addCartItem (state, payload) {
-      state.cart.push(payload)
-      state.cartTotalItems += 1
-      console.log(state)
+    addCartItem (state, product) {
+      if (product.id in state.cart) {
+        const productInfo = state.cart[product.id]
+        productInfo.quantity++
+        state.cart[product.id] = {
+          ...productInfo
+        }
+      } else {
+        state.cart[product.id] = {
+          ...product,
+          quantity: 1
+        }
+      }
+      state.cartTotalItems++
     },
-    removeCartItem (state, productToRemove) {
+    removeCartItem (state, productId) {
+      console.log(productId, state.cart)
       if (state.cartTotalItems <= 0) {
         return
       }
-      state.cart = state.cart.filter(item => item.product_id !== productToRemove)
-      state.cartTotalItems -= 1
+
+      if (!(productId in state.cart)) {
+        return
+      }
+
+      if (state.cart[productId].quantity > 0) {
+        state.cart[productId].quantity--
+        state.cartTotalItems--
+      }
     },
     setItems (state, payload) {
       state.items = payload
@@ -127,6 +145,14 @@ export default createStore({
     getCart: state => state.cart,
     getCartTotalItems: state => state.cartTotalItems,
     getCategories: state => state.categories,
-    getItems: state => state.items
+    getItems: state => state.items,
+    getCartTotalSpent: state => {
+      const cartIterator = Object.keys(state.cart)
+      return cartIterator.reduce((acc, productId) => {
+        const totalItemPrice = (state.cart[productId].quantity * state.cart[productId].price)
+        return acc + totalItemPrice
+      }, 0)
+    }
   }
+
 })

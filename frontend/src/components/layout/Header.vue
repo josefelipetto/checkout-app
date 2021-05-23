@@ -10,10 +10,16 @@
         </div>
 
         <div class="text-end">
-          <button type="button" class="btn btn-dark">
+          <router-link to="/" class="btn btn-dark">
             <BIconCart4 />
             <span class="badge rounded-circle bg-danger" id="lblCartCount">{{ cartTotalItems }}</span>
-          </button>
+          </router-link>
+          <router-link to="/checkout" class="btn btn-warning" v-if="cartTotalItems > 0 && currentRouteName === 'Home'">
+            Proceed to checkout
+          </router-link>
+          <router-link to="/" class="btn btn-warning" v-if="currentRouteName === 'Checkout'">
+            Continue
+          </router-link>
         </div>
       </div>
     </div>
@@ -32,6 +38,9 @@ export default {
   computed: {
     cartTotalItems () {
       return this.$store.getters.getCartTotalItems
+    },
+    currentRouteName () {
+      return this.$route.name
     }
   }
 }
