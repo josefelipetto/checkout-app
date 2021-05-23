@@ -1,4 +1,6 @@
 <template>
+  <OrderResultModal ref="resultModal"/>
+
   <div class="col-md-7 col-lg-8">
     <h4 class="mb-3">Personal information</h4>
     <form class="needs-validation" novalidate="">
@@ -81,7 +83,8 @@
 
       <button
         class="w-100 btn btn-primary btn-lg"
-        type="submit"
+        @click="pay"
+        type="button"
         :disabled="cartTotalItems <= 0"
       >
         {{ checkoutButtonLabel }}
@@ -91,8 +94,17 @@
 </template>
 
 <script>
+import OrderResultModal from '@/components/OrderResultModal'
+
 export default {
   name: 'PaymentForm',
+  methods: {
+    pay () {
+      const success = true
+      this.$refs.resultModal.setType(success === true ? 'S' : 'F')
+      this.$refs.resultModal.show()
+    }
+  },
   computed: {
     cartTotalItems () {
       return this.$store.getters.getCartTotalItems
@@ -100,6 +112,9 @@ export default {
     checkoutButtonLabel () {
       return this.cartTotalItems <= 0 ? 'Add some items to proceed' : 'Proceed to Checkout'
     }
+  },
+  components: {
+    OrderResultModal
   }
 }
 </script>

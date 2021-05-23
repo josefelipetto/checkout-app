@@ -1,13 +1,10 @@
 <template>
   <div class="container">
     <main>
-      <div class="py-5 text-center">
-        <h2>Confirm your order</h2>
-        <p class="lead">
-          Confirm your order and fill payment info. Don't worry, we'll start right after that :)
-        </p>
-      </div>
-
+      <MarketingCall
+        title="Confirm your order"
+        text="Confirm your order and fill payment info. Don't worry, we'll start right after that :)"
+      />
       <div class="row g-5">
         <CartItems/>
         <PaymentForm/>
@@ -19,12 +16,14 @@
 <script>
 import PaymentForm from '@/components/PaymentForm'
 import CartItems from '@/components/CartItems'
+import MarketingCall from '@/components/MarketingCall'
 
 export default {
   name: 'Checkout',
   components: {
     PaymentForm,
-    CartItems
+    CartItems,
+    MarketingCall
   }
 }
 </script>

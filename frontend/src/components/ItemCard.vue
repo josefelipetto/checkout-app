@@ -27,7 +27,9 @@
               </div>
               <input type="text" class="form-control input-manulator" placeholder=""
                      aria-label="Example text with button addon"
-                     :value="product.id in cart ? cart[product.id].quantity : 0">
+                     :value="product.id in cart ? cart[product.id].quantity : 0"
+                     disabled
+              >
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary add-btn"
                         type="button"
