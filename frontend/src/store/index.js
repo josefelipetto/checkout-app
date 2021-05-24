@@ -1,14 +1,10 @@
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
-const URL = 'http://localhost:5000/'
-const headers = { Accept: 'application/json' }
 export default createStore({
   state: {
     cart: {},
-    cartTotalItems: 0,
-    categories: [],
-    items: []
+    cartTotalItems: 0
   },
   mutations: {
     addCartItem (state, product) {
@@ -49,33 +45,17 @@ export default createStore({
       delete state.cart[productId]
       state.cartTotalItems -= itemQuantity
     },
-    setItems (state, payload) {
-      state.items = payload
-    },
-    setCategories (state, payload) {
-      state.categories = payload
-    },
     emptyCart (state, payload) {
       state.cart = {}
       state.cartTotalItems = 0
     }
   },
   actions: {
-    async setCategories (state) {
-      const categories = (await fetch(URL + 'menu/category', { headers })).json()
-      state.commit('setCategories', categories)
-    },
-    async setItems (state) {
-      const products = (await fetch(URL + 'menu/product', { headers })).json()
-      state.commit('setItems', products)
-    }
   },
   modules: {},
   getters: {
     getCart: state => state.cart,
     getCartTotalItems: state => state.cartTotalItems,
-    getCategories: state => state.categories,
-    getItems: state => state.items,
     getCartTotalSpent: state => {
       const cartIterator = Object.keys(state.cart)
       return cartIterator.reduce((acc, productId) => {
@@ -85,6 +65,8 @@ export default createStore({
     }
   },
   plugins: [
-    createPersistedState()
+    createPersistedState({
+      paths: ['cart', 'cartTotalItems']
+    })
   ]
 })

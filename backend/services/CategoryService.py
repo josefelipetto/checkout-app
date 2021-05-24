@@ -21,5 +21,10 @@ class CategoryService:
                 "id": 3,
                 "image_id": "eba73b2361fae3",
                 "name": "Drinks"
+            },
+            {
+                "id": 4,
+                "image_id": "eba73b2361fae3",
+                "name": "Drinks Some"
             }
         ]

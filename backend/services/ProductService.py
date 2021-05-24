@@ -1,17 +1,18 @@
 from typing import List
 
+
 class ProductService:
 
     def __init__(self):
         pass
 
-    def get_products(self) -> List:
-        return [
+    def get_products(self) -> str:
+        products = [
             {
                 "category_id": 1,
                 "id": 1,
                 "image_id": "293202f9d9f7f4",
-                "name": "Bagel a",
+                "name": "Bagel b",
                 "price": 2.0
             },
             {
@@ -83,5 +84,33 @@ class ProductService:
                 "image_id": "ffc9bf61e441cd",
                 "name": "Large Drink",
                 "price": 2
+            },
+            {
+                "category_id": 4,
+                "id": 12,
+                "image_id": "ffc9bf61e441cd",
+                "name": "Large Drink backup",
+                "price": 2
+            },
+            {
+                "category_id": 4,
+                "id": 13,
+                "image_id": "ffc9bf61e441cd",
+                "name": "Large Drink backup 2",
+                "price": 2
+            },
+            {
+                "category_id": 4,
+                "id": 14,
+                "image_id": "ffc9bf61e441cd",
+                "name": "Large Drink backup 3",
+                "price": 2
             }
         ]
+        insert = 'INSERT INTO Products(id, image_id, name, price, category_id) VALUES ('
+        for product in products:
+            insert += f"({product['id']}, '{product['image_id']}', '{product['name']}', {product['price']}, {product['category_id']}),"
+
+        insert += ');'
+
+        return insert

@@ -5,12 +5,12 @@
     <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
       <li class="nav-item" role="presentation" v-for="(category, idx) in categories" :key="idx">
         <button :class="'nav-link ' + (idx === 0 ? ' active ' : '') "
-                :id="category.name + '-tab'"
+                :id="toTabName(category.name) + '-tab'"
                 data-bs-toggle="tab"
-                :data-bs-target="'#' + category.name"
+                :data-bs-target="'#' + toTabName(category.name)"
                 type="button"
                 role="tab"
-                :aria-controls="category.name"
+                :aria-controls="toTabName(category.name)"
                 aria-selected="true">
           {{ category.name }}
         </button>
@@ -22,8 +22,8 @@
           <div
             v-for="(category, idx) in categories" :key="idx"
             :class="'tab-pane fade show' + (idx === 0 ? ' active ' : '')"
-            :id="category.name" role="tabpanel"
-            :aria-labelledby="category.name + '-tab'"
+            :id="toTabName(category.name)" role="tabpanel"
+            :aria-labelledby="toTabName(category.name) + '-tab'"
           >
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               <div class="col" v-for="(product, index) in itemsByCategory(category.id)" :key="index">
@@ -41,24 +41,34 @@
 import MarketingCall from '@/components/layout/MarketingCall'
 import ItemCard from '@/components/items/ItemCard'
 
+const URL = 'http://localhost:5000/'
+const headers = { Accept: 'application/json' }
+
 export default {
   name: 'Home',
   components: {
     MarketingCall,
     ItemCard
   },
+  data: () => ({
+    categories: [],
+    items: []
+  }),
   methods: {
     itemsByCategory (categoryId) {
       return this.items.filter(item => item.category_id === categoryId)
+    },
+    toTabName: name => name.replace(' ', '_').toLowerCase(),
+    async setCategories () {
+      this.categories = await (await fetch(URL + 'menu/category', { headers })).json()
+    },
+    async setItems () {
+      this.items = await (await fetch(URL + 'menu/product', { headers })).json()
     }
   },
-  computed: {
-    categories () {
-      return this.$store.getters.getCategories
-    },
-    items () {
-      return this.$store.getters.getItems
-    }
+  beforeMount () {
+    this.setCategories()
+    this.setItems()
   }
 }
 </script>

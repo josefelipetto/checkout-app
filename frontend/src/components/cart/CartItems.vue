@@ -5,7 +5,11 @@
       <span class="badge bg-primary rounded-pill">{{ totalItems }}</span>
     </h4>
     <ul class="list-group mb-3">
-      <li class="list-group-item d-flex justify-content-between lh-sm" v-for="(productId, idx) of cartIterator" :key="idx">
+      <li
+        class="list-group-item d-flex justify-content-between lh-sm"
+        v-for="(productId, idx) of cartIterator"
+        :key="idx"
+      >
         <div>
           <div class="d-flex flex-row">
             <h6 class="my-0">{{ cart[productId].name }} </h6>
@@ -43,7 +47,7 @@ export default {
       return this.$store.getters.getCart
     },
     cartIterator () {
-      return Object.keys(this.$store.getters.getCart)
+      return Object.keys(this.$store.getters.getCart).filter(key => this.cart[key].quantity > 0)
     },
     totalItems () {
       return this.$store.getters.getCartTotalItems
