@@ -127,6 +127,19 @@ export default createStore({
         state.cartTotalItems--
       }
     },
+    deleteCartItem (state, productId) {
+      if (state.cartTotalItems <= 0) {
+        return
+      }
+
+      if (!(productId in state.cart)) {
+        return
+      }
+
+      const itemQuantity = state.cart[productId].quantity
+      delete state.cart[productId]
+      state.cartTotalItems -= itemQuantity
+    },
     setItems (state, payload) {
       state.items = payload
     },
@@ -134,7 +147,7 @@ export default createStore({
       state.categories = payload
     },
     emptyCart (state, payload) {
-      state.cart = []
+      state.cart = {}
       state.cartTotalItems = 0
     }
   },

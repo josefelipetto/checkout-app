@@ -7,7 +7,11 @@
     <ul class="list-group mb-3">
       <li class="list-group-item d-flex justify-content-between lh-sm" v-for="(productId, idx) of cartIterator" :key="idx">
         <div>
-          <h6 class="my-0">{{ cart[productId].name }}</h6>
+          <div class="d-flex flex-row">
+            <h6 class="my-0">{{ cart[productId].name }} </h6>
+            &nbsp;
+            <BIconTrash @click="deleteItem(productId)" title="Delete this item from the cart"/>
+          </div>
           <small class="text-muted">Unitary price: ${{ cart[productId].price.toFixed(2) }}</small><br>
           <small class="text-muted">Amount: {{ cart[productId].quantity }}</small>
         </div>
@@ -22,8 +26,18 @@
 </template>
 
 <script>
+import { BIconTrash } from 'bootstrap-icons-vue'
+
 export default {
   name: 'CartItems',
+  components: {
+    BIconTrash
+  },
+  methods: {
+    deleteItem (productId) {
+      this.$store.commit('deleteCartItem', productId)
+    }
+  },
   computed: {
     cart () {
       return this.$store.getters.getCart
