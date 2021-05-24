@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 export default createStore({
   state: {
-    cart: [],
+    cart: {},
     cartTotalItems: 0,
     categories: [
       {
@@ -152,6 +153,8 @@ export default createStore({
         return acc + totalItemPrice
       }, 0)
     }
-  }
-
+  },
+  plugins: [
+    createPersistedState()
+  ]
 })

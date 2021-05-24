@@ -3,6 +3,7 @@
 
   <div class="col-md-7 col-lg-8">
     <div class="alert alert-danger" role="alert" v-if="errors.length">
+      <b>Please correct the following error(s):</b>
       <ul>
         <li v-for="(error,idx) in errors" :key="idx">{{ error }}</li>
       </ul>
@@ -173,7 +174,7 @@ export default {
       if (!this.validateForm()) {
         return
       }
-      const success = false
+      const success = true
       this.$refs.resultModal.setType(success === true ? 'S' : 'F')
       this.$refs.resultModal.show()
 
