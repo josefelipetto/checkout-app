@@ -6,8 +6,8 @@ class ProductService:
     def __init__(self):
         pass
 
-    def get_products(self) -> str:
-        products = [
+    def get_products(self) -> List:
+        return [
             {
                 "category_id": 1,
                 "id": 1,
@@ -107,10 +107,3 @@ class ProductService:
                 "price": 2
             }
         ]
-        insert = 'INSERT INTO Products(id, image_id, name, price, category_id) VALUES ('
-        for product in products:
-            insert += f"({product['id']}, '{product['image_id']}', '{product['name']}', {product['price']}, {product['category_id']}),"
-
-        insert += ');'
-
-        return insert

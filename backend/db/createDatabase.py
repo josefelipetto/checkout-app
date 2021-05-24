@@ -1,6 +1,6 @@
 import sqlite3
 
-connection = sqlite3.connect('checkoutapp.db')
+connection = sqlite3.connect('/data/checkoutapp.db')
 cursor = connection.cursor()
 
 cursor.execute("""
