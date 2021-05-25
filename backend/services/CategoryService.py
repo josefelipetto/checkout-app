@@ -1,30 +1,17 @@
+import sqlite3
 from typing import List
 
 
+# Responsible for holding all category business logic
 class CategoryService:
     def __init__(self):
+        """Setup database connection and other properties"""
+        self.connection = sqlite3.connect('/data/checkoutapp.db')
+        self.connection.row_factory = sqlite3.Row
         pass
 
     def get_categories(self) -> List:
-        return [
-            {
-                "id": 1,
-                "image_id": "f3fbf57b118fa9",
-                "name": "Bakery"
-            },
-            {
-                "id": 2,
-                "image_id": "b271afbefdc554",
-                "name": "Entrees"
-            },
-            {
-                "id": 3,
-                "image_id": "eba73b2361fae3",
-                "name": "Drinks"
-            },
-            {
-                "id": 4,
-                "image_id": "eba73b2361fae3",
-                "name": "Drinks Some"
-            }
-        ]
+        """Returns a list of categories"""
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT id, name FROM Categories")
+        return [dict(row) for row in cursor.fetchall()]

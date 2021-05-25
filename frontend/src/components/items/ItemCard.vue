@@ -1,7 +1,7 @@
 <template>
   <div class="food-card">
     <div class="food-card_img">
-      <img src="https://i.imgur.com/eFWRUuR.jpg" :alt="product.image_id">
+      <img :src="imageUrl" :alt="product.image_id">
       <a href="#"><i class="far fa-heart"></i></a>
     </div>
     <div class="food-card_content">
@@ -70,6 +70,9 @@ export default {
   computed: {
     cart () {
       return this.$store.getters.getCart
+    },
+    imageUrl () {
+      return `${this.baseAPIUrl}static/${this.product.image_id}`
     }
   }
 }

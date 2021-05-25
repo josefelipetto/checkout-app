@@ -41,7 +41,6 @@
 import MarketingCall from '@/components/layout/MarketingCall'
 import ItemCard from '@/components/items/ItemCard'
 
-const URL = 'http://localhost:5000/'
 const headers = { Accept: 'application/json' }
 
 export default {
@@ -60,10 +59,10 @@ export default {
     },
     toTabName: name => name.replace(' ', '_').toLowerCase(),
     async setCategories () {
-      this.categories = await (await fetch(URL + 'menu/category', { headers })).json()
+      this.categories = await (await fetch(this.baseAPIUrl + 'menu/category', { headers })).json()
     },
     async setItems () {
-      this.items = await (await fetch(URL + 'menu/product', { headers })).json()
+      this.items = await (await fetch(this.baseAPIUrl + 'menu/product', { headers })).json()
     }
   },
   beforeMount () {
