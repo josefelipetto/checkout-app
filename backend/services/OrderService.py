@@ -45,6 +45,7 @@ def validate_payload(payload) -> (bool, List):
     return not has_errors, errors
 
 
+# Class responsible for holding all order business logic
 class OrderService:
     def __init__(self):
         """Setup database connection and other properties"""

@@ -182,7 +182,7 @@ export default {
           mode: 'cors',
           cache: 'default',
           body: JSON.stringify({
-            paymentInfo: this.preparePayload()
+            orderInfo: this.preparePayload()
           }),
           headers: {
             'Content-Type': 'application/json'

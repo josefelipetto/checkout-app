@@ -2,7 +2,7 @@ import sqlite3
 from typing import List
 
 
-# Responsible for holding all category business logic
+# Class responsible for holding all product business logic
 class ProductService:
 
     def __init__(self):
