@@ -3,7 +3,6 @@ from flask_cors import CORS, cross_origin
 from services.ProductService import ProductService
 from services.CategoryService import CategoryService
 from services.OrderService import OrderService
-import sys
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -28,9 +27,15 @@ def get_products():
 @cross_origin()
 def create_order():
     payment_info = request.json["paymentInfo"]
+
     order_service = OrderService()
-    worked, check = order_service.create_order(payment_info)
-    return jsonify(check), 201
+    created, errors = order_service.create_order(payment_info)
+
+    print(errors, flush=True)
+    status_code = 201 if created else 400
+
+    return '', status_code
+
 
 @app.route('/order', methods=['GET'])
 @cross_origin()

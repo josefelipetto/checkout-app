@@ -1,10 +1,10 @@
 import sqlite3
-from typing import List
+from typing import List, Dict
 from flask import escape
-import sys
 
 
 def validate_payload(payload) -> (bool, List):
+    """Validate order payload for fields existences. Returns validation result and possible list of errors"""
     errors = []
     has_errors = False
     if payload['ccCVV'] is None:
@@ -42,19 +42,21 @@ def validate_payload(payload) -> (bool, List):
         errors.append('You should select some items before checking out')
         has_errors = True
 
-    return has_errors, errors
+    return not has_errors, errors
 
 
 class OrderService:
     def __init__(self):
+        """Setup database connection and other properties"""
         self.connection = sqlite3.connect('/data/checkoutapp.db')
         self.connection.row_factory = sqlite3.Row
         pass
 
     def create_order(self, payment_info) -> (bool, List):
-        # validated, errors = validate_payload(payment_info)
-        # if not validated:
-        #     return False, errors
+        """Creates all the database objects related to order"""
+        validated, errors = validate_payload(payment_info)
+        if not validated:
+            return False, errors
 
         # create order object
         first_name = escape(payment_info['firstName'])
@@ -77,13 +79,31 @@ class OrderService:
         self.connection.commit()
         return True, check
 
-    def get_orders(self):
+    def get_orders(self) -> Dict:
+        """Get all orders with its items"""
         cursor = self.connection.cursor()
-        cursor.execute("SELECT id, first_name, last_name, product_id, quantity FROM Orders "
+        cursor.execute("SELECT Orders.id AS order_id, first_name, last_name, product_id, quantity FROM Orders "
                        "    INNER JOIN OrderItems ON Orders.id = OrderItems.order_id")
-        return [{"id": row['id'], ""} for row in cursor.fetchall()]
+        orders = {}
+        for row in cursor.fetchall():
+            row = dict(row)
+            key = row['order_id']
+            if key not in orders:
+                orders[key] = {
+                    "firstName": row['first_name'],
+                    "lastName": row['last_name'],
+                    "items": []
+                }
+
+            orders[key]['items'].append({
+                'productId': row['product_id'],
+                "quantity": row['quantity']
+            })
+
+        return orders
 
     def _store_order(self, first_name, last_name, email) -> int:
+        """Creates a row in Orders table with basic order information"""
         cursor = self.connection.cursor()
         cursor.execute(
             f"INSERT INTO Orders (first_name, last_name, email) VALUES ('{first_name}', '{last_name}', '{email}')"
@@ -91,6 +111,7 @@ class OrderService:
         return cursor.lastrowid
 
     def _store_order_payment_info(self, order_id, payment_method, cc_name, cc_number, cc_expiration, cc_cvv) -> None:
+        """Creates a row in orderPayment that stores payment information of an order"""
         cursor = self.connection.cursor()
         cursor.execute(
             f"INSERT INTO OrderPayment (order_id, payment_type, name_on_card, card_number, expiration, cvv)"
@@ -98,6 +119,7 @@ class OrderService:
         )
 
     def _store_order_items(self, order_id, items) -> bool:
+        """Store order's items"""
         cursor = self.connection.cursor()
         cursor.executemany(
             'INSERT INTO OrderItems (order_id, product_id, quantity) VALUES (?, ?, ?)',
