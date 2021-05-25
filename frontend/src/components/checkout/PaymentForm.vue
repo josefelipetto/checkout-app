@@ -190,7 +190,11 @@ export default {
         }
       )
 
-      const res = await fetch(request)
+      const res = await fetch(request).catch(_ => {
+        this.$refs.resultModal.setType('F')
+        this.$refs.resultModal.show()
+      })
+
       const created = res.status === 201
       this.$refs.resultModal.setType(created ? 'S' : 'F')
       this.$refs.resultModal.show()
