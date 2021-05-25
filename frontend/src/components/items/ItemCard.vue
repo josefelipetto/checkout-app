@@ -72,7 +72,7 @@ export default {
       return this.$store.getters.getCart
     },
     imageUrl () {
-      return `${this.baseAPIUrl}static/${this.product.image_id}`
+      return `${this.baseAPIUrl}/static/${this.product.image_id}`
     }
   }
 }

@@ -170,16 +170,51 @@ export default {
     ccCVV: null
   }),
   methods: {
-    pay () {
+    async pay () {
       if (!this.validateForm()) {
         return
       }
-      const success = true
-      this.$refs.resultModal.setType(success === true ? 'S' : 'F')
+
+      const request = new Request(
+        `${this.baseAPIUrl}/order`,
+        {
+          method: 'POST',
+          mode: 'cors',
+          cache: 'default',
+          body: JSON.stringify({
+            paymentInfo: this.preparePayload()
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      const res = await fetch(request)
+      const created = res.status === 201
+      this.$refs.resultModal.setType(created ? 'S' : 'F')
       this.$refs.resultModal.show()
 
-      if (success) {
+      if (created) {
         this.$store.commit('emptyCart')
+      }
+    },
+    preparePayload () {
+      return {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        paymentMethod: this.paymentMethod,
+        ccName: this.ccName,
+        ccNumber: this.ccNumber,
+        ccExpiration: this.ccExpiration,
+        ccCVV: this.ccCVV,
+        items: this.cartIterator.map(item => {
+          return {
+            id: item,
+            quantity: this.cart[item].quantity
+          }
+        })
       }
     },
     validateForm () {
@@ -240,6 +275,12 @@ export default {
     },
     checkoutButtonLabel () {
       return this.cartTotalItems <= 0 ? 'Add some items to proceed' : 'Proceed to Checkout'
+    },
+    cart () {
+      return this.$store.getters.getCart
+    },
+    cartIterator () {
+      return Object.keys(this.$store.getters.getCart)
     }
   },
   components: {

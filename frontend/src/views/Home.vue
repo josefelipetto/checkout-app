@@ -59,10 +59,10 @@ export default {
     },
     toTabName: name => name.replace(' ', '_').toLowerCase(),
     async setCategories () {
-      this.categories = await (await fetch(this.baseAPIUrl + 'menu/category', { headers })).json()
+      this.categories = await (await fetch(this.baseAPIUrl + '/menu/category', { headers })).json()
     },
     async setItems () {
-      this.items = await (await fetch(this.baseAPIUrl + 'menu/product', { headers })).json()
+      this.items = await (await fetch(this.baseAPIUrl + '/menu/product', { headers })).json()
     }
   },
   beforeMount () {
