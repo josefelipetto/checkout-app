@@ -18,14 +18,30 @@
 </template>
 
 <script>
+/**
+ * Error message component, used when there is some error
+ * @displayName Error message
+ */
 export default {
   name: 'ErrorMessage',
   props: {
+    /**
+     * Title property
+     */
     title: String,
+    /**
+     * Text property
+     */
     text: String,
+    /**
+     * Determine if a reload page button should be displayed
+     */
     reloadButton: Boolean
   },
   methods: {
+    /**
+     * Reload the page
+     */
     reload () {
       this.$router.go(0)
     }

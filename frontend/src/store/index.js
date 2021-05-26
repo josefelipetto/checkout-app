@@ -3,10 +3,21 @@ import createPersistedState from 'vuex-persistedstate'
 
 export default createStore({
   state: {
+    /**
+     * The cart.
+     */
     cart: {},
+    /**
+     * The number of items on the cart
+     */
     cartTotalItems: 0
   },
   mutations: {
+    /**
+     * Add an item to the cart
+     * @param state
+     * @param product
+     */
     addCartItem (state, product) {
       if (product.id in state.cart) {
         state.cart[product.id].quantity++
@@ -18,6 +29,11 @@ export default createStore({
       }
       state.cartTotalItems++
     },
+    /**
+     * remove an unity of an item from the cart
+     * @param state
+     * @param productId
+     */
     removeCartItem (state, productId) {
       if (state.cartTotalItems <= 0) {
         return
@@ -32,6 +48,11 @@ export default createStore({
         state.cartTotalItems--
       }
     },
+    /**
+     * Delete the item from the cart
+     * @param state
+     * @param productId
+     */
     deleteCartItem (state, productId) {
       if (state.cartTotalItems <= 0) {
         return
@@ -45,6 +66,11 @@ export default createStore({
       delete state.cart[productId]
       state.cartTotalItems -= itemQuantity
     },
+    /**
+     * Empty the cart
+     * @param state
+     * @param payload
+     */
     emptyCart (state, payload) {
       state.cart = {}
       state.cartTotalItems = 0
@@ -54,8 +80,23 @@ export default createStore({
   },
   modules: {},
   getters: {
+    /**
+     * Get current cart
+     * @param state
+     * @return {{}}
+     */
     getCart: state => state.cart,
+    /**
+     * Get current number of items on the cart
+     * @param state
+     * @return {number}
+     */
     getCartTotalItems: state => state.cartTotalItems,
+    /**
+     * Get the total spent so far on the cart
+     * @param state
+     * @return {number}
+     */
     getCartTotalSpent: state => {
       const cartIterator = Object.keys(state.cart)
       return cartIterator.reduce((acc, productId) => {
@@ -65,6 +106,10 @@ export default createStore({
     }
   },
   plugins: [
+    /**
+     * Plugin to persist cart and cartTotalItems on local storage to
+     * avoid losing state after refreshing and/or closing the tab
+     */
     createPersistedState({
       paths: ['cart', 'cartTotalItems']
     })

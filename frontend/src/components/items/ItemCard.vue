@@ -49,10 +49,20 @@
 <script>
 import { BIconPlus, BIconDash } from 'bootstrap-icons-vue'
 
+/**
+ * Renders an Item of the card
+ * @displayName Item Card
+ */
 export default {
   name: 'ItemCard',
   props: {
+    /**
+     * Product property
+     */
     product: Object,
+    /**
+     * Category of the product
+     */
     category: Object
   },
   components: {
@@ -60,17 +70,33 @@ export default {
     BIconDash
   },
   methods: {
+    /**
+     * add an item to the cart
+     * @param product
+     */
     addCartItem (product) {
       this.$store.commit('addCartItem', product)
     },
+    /**
+     * removes an item from the cart
+     * @param productId
+     */
     removeCartItem (productId) {
       this.$store.commit('removeCartItem', productId)
     }
   },
   computed: {
+    /**
+     * Returns the current cart
+     * @return {(function(*): {})|*}
+     */
     cart () {
       return this.$store.getters.getCart
     },
+    /**
+     * Returns the image url to retrieve on the api
+     * @return {string}
+     */
     imageUrl () {
       return `${this.baseAPIUrl}/static/${this.product.image_id}`
     }

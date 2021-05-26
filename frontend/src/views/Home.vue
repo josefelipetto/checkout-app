@@ -49,7 +49,10 @@ import ItemCard from '@/components/items/ItemCard'
 import ErrorMessage from '@/components/helpers/ErrorMessage'
 
 const headers = { Accept: 'application/json' }
-
+/**
+ * Home page
+ * @displayName Home Page
+ */
 export default {
   name: 'Home',
   title: 'Magic - Menu',
@@ -64,10 +67,23 @@ export default {
     isApiConnected: true
   }),
   methods: {
+    /**
+     * Returns items given a category
+     * @param categoryId
+     * @return {*[]}
+     */
     itemsByCategory (categoryId) {
       return this.items.filter(item => item.category_id === categoryId)
     },
+    /**
+     * Returns valid tab names to place in html attributes
+     * @param name
+     * @return {string}
+     */
     toTabName: name => name.replace(' ', '_').toLowerCase(),
+    /**
+     * Set categories state from API
+     */
     setCategories () {
       fetch(this.baseAPIUrl + '/menu/category', { headers })
         .then(response => response.json())
@@ -79,6 +95,9 @@ export default {
           this.isApiConnected = false
         })
     },
+    /**
+     * Set items state from API
+     */
     setItems () {
       fetch(this.baseAPIUrl + '/menu/product', { headers })
         .then(response => response.json())

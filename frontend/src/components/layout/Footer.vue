@@ -9,6 +9,10 @@
 </template>
 
 <script>
+/**
+ * Footer component
+ * @displayName Footer
+ */
 export default {
   name: 'Footer'
 }

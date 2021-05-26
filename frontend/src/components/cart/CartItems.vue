@@ -32,26 +32,48 @@
 <script>
 import { BIconTrash } from 'bootstrap-icons-vue'
 
+/**
+ * Cart Items module responsible for hold a list of added products to the cart
+ * @displayName Cart Items
+*/
 export default {
   name: 'CartItems',
   components: {
     BIconTrash
   },
   methods: {
+    /**
+     * delete an item from the cart
+     * @param productId
+     */
     deleteItem (productId) {
       this.$store.commit('deleteCartItem', productId)
     }
   },
   computed: {
+    /**
+     * Returns the current cart
+     * @return {(function(*): {})|*}
+     */
     cart () {
       return this.$store.getters.getCart
     },
+    /**
+     * Returns cart keys(products) to be iterated
+     * @returns {string[]}
+     */
     cartIterator () {
       return Object.keys(this.$store.getters.getCart).filter(key => this.cart[key].quantity > 0)
     },
+    /**
+     * Returns the number of items on the cart
+     */
     totalItems () {
       return this.$store.getters.getCartTotalItems
     },
+    /**
+     * Returns the total spent so far
+     */
     cartTotalSpent () {
       return this.$store.getters.getCartTotalSpent.toFixed(2)
     }

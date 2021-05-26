@@ -31,9 +31,17 @@
 <script>
 import { Modal } from 'bootstrap'
 import { BIconCheckLg } from 'bootstrap-icons-vue'
+
+/**
+ * Modal responsible for comunicate order success or fail message
+ * @displayName Order Confirmed Modal
+*/
 export default {
   name: 'OrderConfirmedModal',
   props: {
+    /**
+     * The url that should redirects in case of success after the `Ok` button is pressed
+     */
     onSuccessRedirectTo: String
   },
   data: () => ({
@@ -43,15 +51,25 @@ export default {
     text: ''
   }),
   methods: {
+    /**
+     * Shows the modal on the screen
+     */
     show () {
       this.modal.show()
     },
+    /**
+     * Hides the modal on the screen
+     */
     hide () {
       this.modal.hide()
       if (this.type === 'S') {
         this.$router.push(this.onSuccessRedirectTo)
       }
     },
+    /**
+     * Set current type, whether is Success 'S' or Fail 'F'
+     * @param type
+     */
     setType (type) {
       this.type = type
     }
@@ -60,15 +78,27 @@ export default {
     this.modal = new Modal(document.getElementById('success-modal'))
   },
   computed: {
+    /**
+     * Return the modal items background color based on type.
+     */
     computedBackgroundColor () {
       return this.type === 'S' ? '#82ce34' : '#ce4234'
     },
+    /**
+     * Returns the background of the confirm button when focused based on type.
+     */
     computedBackgroundFocusColor () {
       return this.type === 'S' ? '#6fb32b' : '#b32b2b'
     },
+    /**
+     * Returns the title of the modal based on type
+     */
     computedTitle () {
       return this.type === 'S' ? 'Awesome!' : 'Whoops :('
     },
+    /**
+     * Returns the text of the modal based on type
+     */
     computedText () {
       return this.type === 'S'
         ? 'Your order has been confirmed and we already started to make your meal.'

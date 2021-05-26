@@ -156,6 +156,10 @@
 <script>
 import OrderResultModal from '@/components/checkout/OrderResultModal'
 
+/**
+ * Payment form
+ * @displayName Payment form
+*/
 export default {
   name: 'PaymentForm',
   data: () => ({
@@ -170,6 +174,10 @@ export default {
     ccCVV: null
   }),
   methods: {
+    /**
+     * Validates user input and send the order to the API
+     * @returns {Promise<void>}
+     */
     async pay () {
       if (!this.validateForm()) {
         return
@@ -203,6 +211,10 @@ export default {
         this.$store.commit('emptyCart')
       }
     },
+    /**
+     * Prepares the payload to be sent to API
+     * @returns {{firstName: null, lastName: null, ccNumber: null, ccCVV: null, ccExpiration: null, paymentMethod: null, ccName: null, items: {quantity: number|*, id: string}[], email: null}}
+     */
     preparePayload () {
       return {
         firstName: this.firstName,
@@ -221,6 +233,10 @@ export default {
         })
       }
     },
+    /**
+     * Validates the form
+     * @returns {boolean}
+     */
     validateForm () {
       this.errors = []
 
@@ -268,21 +284,42 @@ export default {
 
       return !hasErrors
     },
+    /**
+     * Validates if a given email is valid
+     * @param email
+     * @returns {boolean}
+     */
     validEmail: function (email) {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(email)
     }
   },
   computed: {
+    /**
+     * Return total cart items
+     * @returns {(function(*): number)|*}
+     */
     cartTotalItems () {
       return this.$store.getters.getCartTotalItems
     },
+    /**
+     * Returns the label of the button based on cartTotalItems state
+     * @returns {string}
+     */
     checkoutButtonLabel () {
       return this.cartTotalItems <= 0 ? 'Add some items to proceed' : 'Proceed to Checkout'
     },
+    /**
+     * Returns the cart
+     * @returns {(function(*): {})|*}
+     */
     cart () {
       return this.$store.getters.getCart
     },
+    /**
+     * Returns cart keys(products) to be iterated
+     * @returns {string[]}
+     */
     cartIterator () {
       return Object.keys(this.$store.getters.getCart)
     }

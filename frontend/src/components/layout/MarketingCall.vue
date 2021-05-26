@@ -10,10 +10,20 @@
 </template>
 
 <script>
+/**
+ * Marketing Call component
+ * @displayName Marketing Call
+ */
 export default {
   name: 'MarketingCall',
   props: {
+    /**
+     * Title property
+     */
     title: String,
+    /**
+     * Text property
+     */
     text: String
   }
 }

@@ -28,7 +28,10 @@
 
 <script>
 import { BIconBasket, BIconCart4 } from 'bootstrap-icons-vue'
-
+/**
+ * Header component
+ * @displayName Header Component
+ */
 export default {
   name: 'Header',
   components: {
@@ -36,9 +39,17 @@ export default {
     BIconCart4
   },
   computed: {
+    /**
+     * Returns number of items on the cart
+     * @return {(function(*): number)|*}
+     */
     cartTotalItems () {
       return this.$store.getters.getCartTotalItems
     },
+    /**
+     * return current route
+     * @return {string}
+     */
     currentRouteName () {
       return this.$route.name
     }

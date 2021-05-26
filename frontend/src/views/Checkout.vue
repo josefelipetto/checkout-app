@@ -18,6 +18,10 @@ import PaymentForm from '@/components/checkout/PaymentForm'
 import CartItems from '@/components/cart/CartItems'
 import MarketingCall from '@/components/layout/MarketingCall'
 
+/**
+ * Checkout page, where user confirm their order
+ * @displayName Checkout
+*/
 export default {
   name: 'Checkout',
   title: 'Magic - Checkout',
@@ -28,7 +32,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
