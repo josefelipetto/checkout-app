@@ -14,4 +14,4 @@ services:
       - "8080:8080"
     volumes:
       - ./frontend:/app
-      - ./app/mode_modules
+      - ./app/node_modules
