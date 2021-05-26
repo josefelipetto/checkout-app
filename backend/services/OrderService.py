@@ -5,35 +5,23 @@ from flask import escape
 
 def validate_payload(payload) -> (bool, List):
     """Validate order payload for fields existences. Returns validation result and possible list of errors"""
+    required_fields = [
+        'ccCVV',
+        'ccExpiration',
+        'ccName',
+        'ccNumber',
+        'firstName',
+        'lastName',
+        'paymentMethod',
+    ]
+
     errors = []
     has_errors = False
-    if payload['ccCVV'] is None:
-        errors.append('CVV must be present')
-        has_errors = True
 
-    if payload['ccExpiration'] is None:
-        errors.append('Expiration must be present')
-        has_errors = True
-
-    if payload['ccName'] is None:
-        errors.append('Name on card must be present')
-        has_errors = True
-
-    if payload['ccNumber'] is None:
-        errors.append('Card number must be present')
-        has_errors = True
-
-    if payload['firstName'] is None:
-        errors.append('First name must be present')
-        has_errors = True
-
-    if payload['lastName'] is None:
-        errors.append('Last name must be present')
-        has_errors = True
-
-    if payload['paymentMethod'] is None:
-        errors.append('Payment method must be present')
-        has_errors = True
+    for required in required_fields:
+        if payload[required] is None:
+            errors.append(f"{required} must be present")
+            has_errors = True
 
     if payload['items'] is None:
         errors.append('Items must be present')
