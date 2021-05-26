@@ -2,6 +2,16 @@ version: "3.9"
 services:
   api:
     build: ./backend
+    container_name: api
     ports:
       - "5000:5000"
     volumes: ['./backend:/app']
+  ui:
+    build:
+      context: ./frontend
+    container_name: ui
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+      - ./app/mode_modules

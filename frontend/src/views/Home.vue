@@ -52,6 +52,7 @@ const headers = { Accept: 'application/json' }
 
 export default {
   name: 'Home',
+  title: 'Magic - Menu',
   components: {
     MarketingCall,
     ItemCard,

@@ -20,6 +20,7 @@ import MarketingCall from '@/components/layout/MarketingCall'
 
 export default {
   name: 'Checkout',
+  title: 'Magic - Checkout',
   components: {
     PaymentForm,
     CartItems,
