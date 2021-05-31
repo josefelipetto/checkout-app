@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   api:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile-${ENV}
     container_name: api
     ports:
       - "5000:5000"
@@ -9,10 +11,11 @@ services:
   ui:
     build:
       context: ./frontend
-      dockerfile: Dockerfile-${ENV}
+      dockerfile: docker/Dockerfile-${ENV}
     container_name: ui
     ports:
       - "8080:80"
+      - "8081:8080" # development mode
     volumes:
       - ./frontend:/app
       - ./app/node_modules
