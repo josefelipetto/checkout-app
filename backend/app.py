@@ -36,7 +36,7 @@ def create_order():
 
     status_code = 201 if created else 400
 
-    return '', status_code
+    return errors, status_code
 
 
 @app.route('/order', methods=['GET'])
